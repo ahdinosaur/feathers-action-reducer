@@ -1,0 +1,35 @@
+{
+  "name": "feathers-action-reducers",
+  "version": "1.0.0",
+  "description": "redux reducers for feathers service actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahdinosaur/feathers-action-reducers.git"
+  },
+  "keywords": [
+    "feathers",
+    "crud",
+    "redux",
+    "reducers",
+    "rest",
+    "api"
+  ],
+  "author": "Mikey <michael.williams@enspiral.com> (http://dinosaur.os)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahdinosaur/feathers-action-reducers/issues"
+  },
+  "homepage": "https://github.com/ahdinosaur/feathers-action-reducers#readme",
+  "dependencies": {
+    "feathers-action-types": "^1.0.0",
+    "lodash.mapvalues": "^3.0.1",
+    "redux-actions": "^0.8.0"
+  },
+  "devDependencies": {
+    "react-addons-update": "^0.14.3"
+  }
+}
