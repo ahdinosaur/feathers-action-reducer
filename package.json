@@ -18,18 +18,39 @@
     "rest",
     "api"
   ],
-  "author": "Mikey <michael.williams@enspiral.com> (http://dinosaur.os)",
+  "author": "Mikey <michael.williams@enspiral.com> (http://dinosaur.is)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ahdinosaur/feathers-action-reducers/issues"
   },
   "homepage": "https://github.com/ahdinosaur/feathers-action-reducers#readme",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
+  },
   "dependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
     "feathers-action-types": "^1.0.0",
     "lodash.mapvalues": "^3.0.1",
     "redux-actions": "^0.8.0"
   },
   "devDependencies": {
-    "react-addons-update": "^0.14.3"
+    "deep-filter-object": "^1.0.0",
+    "feathers-action-creators": "github:ahdinosaur/feathers-action-creators",
+    "standard": "^5.4.1",
+    "tape": "^4.4.0",
+    "update-object": "^1.0.0"
   }
 }

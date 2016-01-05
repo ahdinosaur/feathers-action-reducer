@@ -1,20 +1,31 @@
+"use strict";
+
 // TODO
 // - error handling
 // - status (busy)
-//
-const { handleActions } = require('redux-actions')
+
+const handleActions = require('redux-actions').handleActions
 const createActionTypes = require('feathers-action-types')
 const mapValues = require('lodash.mapvalues')
 
-const { DEFAULT_KEY } = require('./constants')
+const constants = require('./constants')
 
-module.exports = createReducers(serviceName, config) {
-  if (service == null) throw new Error('feathers-action-reducers: Expected service as first argument.')
-  if (config == null) throw new Error('feathers-action-reducers: Expected config as second argument.')
+module.exports = createReducers
 
-  const key = config.key || DEFAULT_KEY
+function createReducers (serviceName, config) {
+  if (serviceName == null) {
+    throw new Error('feathers-action-reducers: Expected serviceName as first argument.')
+  }
+  if (config == null) {
+    throw new Error('feathers-action-reducers: Expected config as second argument.')
+  }
+
+  config = config || {}
+  const key = config.key || constants.DEFAULT_KEY
   const update = config.update
-  if (update == null) throw new Error('feathers-action-reducers: Expected config.update. Try passing in `react-addons-update` or a compatible interface here')
+  if (update == null) {
+    throw new Error('feathers-action-reducers: Expected config.update. Try passing in `react-addons-update` or a compatible interface here (`update-object`, `tcomb/lib/update`)')
+  }
 
   const actionTypes = createActionTypes(serviceName)
 
@@ -26,38 +37,38 @@ module.exports = createReducers(serviceName, config) {
         }, {})
       }
     },
-    [actionTypes.getSuccess]: function (state, action) {
+    [actionTypes.getSuccess]: function (action) {
       return {
         [action.payload.id]: { $set: action.payload.body }
       }
     },
-    [actionTypes.createStart]: function (state, action) {
+    [actionTypes.createStart]: function (action) {
       return {
-        [action.payload.params.cid]: { $set: action.payload.data }
+        [action.payload.cid]: { $set: action.payload.data }
       }
     },
-    [actionTypes.createSuccess]: function (state, action) {
+    [actionTypes.createSuccess]: function (action) {
       return {
-        [action.payload.params.cid]: { $set: undefined },
+        [action.payload.cid]: { $set: undefined },
         [action.payload.body[key]]: { $set: action.payload.body }
       }
     },
-    [actionTypes.createError]: function (state, action) {
+    [actionTypes.createError]: function (action) {
       return {
-        [action.payload.params.cid]: { $set: undefined }
+        [action.payload.cid]: { $set: undefined }
       }
     },
-    [actionTypes.updateStart]: function (state, action) {
+    [actionTypes.updateStart]: function (action) {
       return {
         [action.payload.id]: { $set: action.payload.data }
       }
     },
-    [actionTypes.updateSuccess]: function (state, action) {
+    [actionTypes.updateSuccess]: function (action) {
       return {
         [action.payload.id]: { $set: action.payload.body }
       }
     },
-    [actionTypes.updateError]: function (state, action) {
+    [actionTypes.updateError]: function (action) {
       return {
         [action.params.id]: { $set: undefined }
       }
