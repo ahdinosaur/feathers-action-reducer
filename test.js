@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 const test = require('tape')
 const createSyncActions = require('feathers-action-creators/sync')
@@ -12,11 +12,11 @@ test('create', function (t) {
   const reducer = createReducer('things', { update })
 
   let state = {}
-  const startAction = actions.createStart('1234', { name: "honey" })
+  const startAction = actions.createStart('1234', { name: 'honey' })
   state = reducer(state, startAction)
-  deepEqual(t, state, { '1234': { name: "honey" }})
-  state = reducer(state, actions.createSuccess({ id: 0, name: "honey" }, startAction.payload))
-  deepEqual(t, state, { 0: { id: 0, name: "honey" }})
+  deepEqual(t, state, { '1234': { name: 'honey' } })
+  state = reducer(state, actions.createSuccess({ id: 0, name: 'honey' }, startAction.payload))
+  deepEqual(t, state, { 0: { id: 0, name: 'honey' } })
   t.end()
 })
 

@@ -4,7 +4,7 @@
   "description": "redux reducers for feathers service actions",
   "main": "index.js",
   "scripts": {
-    "test": "tape test.js"
+    "test": "standard && tape test.js"
   },
   "repository": {
     "type": "git",

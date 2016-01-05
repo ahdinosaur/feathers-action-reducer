@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 // TODO
 // - error handling
@@ -72,7 +72,7 @@ function createReducers (serviceName, config) {
       return {
         [action.params.id]: { $set: undefined }
       }
-    },
+    }
   }
 
   const actionHandlers = mapValues(specCreators, (specCreator) => {
