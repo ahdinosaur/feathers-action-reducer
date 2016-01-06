@@ -49,6 +49,7 @@
   "devDependencies": {
     "deep-filter-object": "^1.0.0",
     "feathers-action-creators": "github:ahdinosaur/feathers-action-creators",
+    "object-values": "^1.0.0",
     "standard": "^5.4.1",
     "tape": "^4.4.0",
     "update-object": "^1.0.0"

@@ -3,6 +3,7 @@
 // TODO
 // - error handling
 // - status (busy)
+//   - each async action should have cid as first param?
 
 const handleActions = require('redux-actions').handleActions
 const createActionTypes = require('feathers-action-types')
@@ -34,49 +35,109 @@ function createReducers (serviceName, config) {
       return {
         records: action.payload.body.reduce(function (sofar, entity) {
           sofar[entity[key]] = { $set: entity }
+          return sofar
         }, {})
       }
     },
     [actionTypes.getSuccess]: function (action) {
       return {
-        [action.payload.id]: { $set: action.payload.body }
+        records: {
+          [action.payload.id]: { $set: action.payload.body }
+        }
       }
     },
     [actionTypes.createStart]: function (action) {
       return {
-        [action.payload.cid]: { $set: action.payload.data }
+        records: {
+          [action.payload.cid]: { $set: action.payload.data }
+        }
       }
     },
     [actionTypes.createSuccess]: function (action) {
       return {
-        [action.payload.cid]: { $set: undefined },
-        [action.payload.body[key]]: { $set: action.payload.body }
+        records: {
+          [action.payload.cid]: { $set: undefined },
+          [action.payload.body[key]]: { $set: action.payload.body }
+        }
       }
     },
     [actionTypes.createError]: function (action) {
       return {
-        [action.payload.cid]: { $set: undefined }
+        records: {
+          [action.payload.cid]: { $set: undefined }
+        }
       }
     },
     [actionTypes.updateStart]: function (action) {
       return {
-        [action.payload.id]: { $set: action.payload.data }
+        records: {
+          [action.payload.id]: { $set: action.payload.data }
+        }
       }
     },
     [actionTypes.updateSuccess]: function (action) {
       return {
-        [action.payload.id]: { $set: action.payload.body }
+        records: {
+          [action.payload.id]: { $set: action.payload.body }
+        }
       }
     },
     [actionTypes.updateError]: function (action) {
       return {
-        [action.params.id]: { $set: undefined }
+        records: {
+          [action.params.id]: { $set: undefined }
+        }
+      }
+    },
+    [actionTypes.patchStart]: function (action) {
+      return {
+        records: {
+          [action.payload.id]: { $merge: action.payload.data }
+        }
+      }
+    },
+    [actionTypes.patchSuccess]: function (action) {
+      return {
+        records: {
+          [action.payload.id]: { $merge: action.payload.body }
+        }
+      }
+    },
+    [actionTypes.patchError]: function (action) {
+      return {
+        records: {
+          [action.params.id]: { $set: undefined }
+        }
+      }
+    },
+    [actionTypes.removeStart]: function (action) {
+      return {
+        records: {
+          [action.payload.id]: { $set: undefined }
+        }
+      }
+    },
+    [actionTypes.removeSuccess]: function (action) {
+      return {
+        records: {
+          [action.payload.id]: { $set: undefined }
+        }
+      }
+    },
+    [actionTypes.removeError]: function (action) {
+      return {
+        records: {
+          [action.params.id]: { $set: undefined }
+        }
       }
     }
   }
 
   const actionHandlers = mapValues(specCreators, (specCreator) => {
     return function (state, action) {
+      if (state.records == null) {
+        state = Object.assign(state, { records: {} })
+      }
       return update(state, specCreator(action))
     }
   })
