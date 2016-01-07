@@ -13,12 +13,13 @@ test('find', function (t) {
   const reducer = createReducer('things', { update })
 
   let state = {}
+  const cid = '1234'
   const things = {
     0: { id: 0, name: 'honey' },
     1: { id: 1, name: 'tea' },
     2: { id: 2, mame: 'mug' }
   }
-  const startAction = actions.findStart({ $limit: 3 })
+  const startAction = actions.findStart(cid, { $limit: 3 })
   state = reducer(state, startAction)
   deepEqual(t, state, {})
   state = reducer(state, actions.findSuccess(objectValues(things), startAction.payload))
@@ -31,7 +32,8 @@ test('get', function (t) {
   const reducer = createReducer('things', { update })
 
   let state = {}
-  const startAction = actions.getStart(0)
+  const cid = '1234'
+  const startAction = actions.getStart(cid, 0)
   state = reducer(state, startAction)
   deepEqual(t, state, {})
   state = reducer(state, actions.getSuccess({ id: 0, name: 'honey' }, startAction.payload))
@@ -44,9 +46,10 @@ test('create', function (t) {
   const reducer = createReducer('things', { update })
 
   let state = {}
-  const startAction = actions.createStart('1234', { name: 'honey' })
+  const cid = '1234'
+  const startAction = actions.createStart(cid, { name: 'honey' })
   state = reducer(state, startAction)
-  deepEqual(t, state, { records: { '1234': { name: 'honey' } } })
+  deepEqual(t, state, { records: { [cid]: { name: 'honey' } } })
   state = reducer(state, actions.createSuccess({ id: 0, name: 'honey' }, startAction.payload))
   deepEqual(t, state, { records: { 0: { id: 0, name: 'honey' } } })
   t.end()
@@ -57,7 +60,8 @@ test('update', function (t) {
   const reducer = createReducer('things', { update })
 
   let state = { records: { 0: { id: 0, name: 'honey', description: 'sweet and delicious.' } } }
-  const startAction = actions.updateStart(0, { id: 0, name: 'bee spit' })
+  const cid = '1234'
+  const startAction = actions.updateStart(cid, 0, { id: 0, name: 'bee spit' })
   state = reducer(state, startAction)
   deepEqual(t, state, { records: { 0: { id: 0, name: 'bee spit' } } })
   state = reducer(state, actions.updateSuccess({ id: 0, name: 'bee spit' }, startAction.payload))
@@ -70,7 +74,8 @@ test('patch', function (t) {
   const reducer = createReducer('things', { update })
 
   let state = { records: { 0: { id: 0, name: 'honey', description: 'sweet and delicious.' } } }
-  const startAction = actions.patchStart(0, { id: 0, name: 'bee spit' })
+  const cid = '1234'
+  const startAction = actions.patchStart(cid, 0, { id: 0, name: 'bee spit' })
   state = reducer(state, startAction)
   deepEqual(t, state, { records: { 0: { id: 0, name: 'bee spit', description: 'sweet and delicious.' } } })
   state = reducer(state, actions.patchSuccess({ id: 0, name: 'bee spit' }, startAction.payload))
@@ -83,7 +88,8 @@ test('remove', function (t) {
   const reducer = createReducer('things', { update })
 
   let state = { records: { 0: { id: 0, name: 'honey' } } }
-  const startAction = actions.removeStart(0)
+  const cid = '1234'
+  const startAction = actions.removeStart(cid, 0)
   state = reducer(state, startAction)
   deepEqual(t, state, { records: {} })
   state = reducer(state, actions.removeSuccess({ id: 0, name: 'honey' }, startAction.payload))
