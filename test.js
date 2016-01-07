@@ -12,7 +12,7 @@ test('find', function (t) {
   const actions = createSyncActions('things')
   const reducer = createReducer('things', { update })
 
-  let state = {}
+  let state
   const cid = '1234'
   const things = {
     0: { id: 0, name: 'honey' },
@@ -21,7 +21,7 @@ test('find', function (t) {
   }
   const startAction = actions.findStart(cid, { $limit: 3 })
   state = reducer(state, startAction)
-  deepEqual(t, state, {})
+  deepEqual(t, state, { records: {} })
   state = reducer(state, actions.findSuccess(objectValues(things), startAction.payload))
   deepEqual(t, state, { records: things })
   t.end()
@@ -31,11 +31,11 @@ test('get', function (t) {
   const actions = createSyncActions('things')
   const reducer = createReducer('things', { update })
 
-  let state = {}
+  let state
   const cid = '1234'
   const startAction = actions.getStart(cid, 0)
   state = reducer(state, startAction)
-  deepEqual(t, state, {})
+  deepEqual(t, state, { records: {} })
   state = reducer(state, actions.getSuccess({ id: 0, name: 'honey' }, startAction.payload))
   deepEqual(t, state, { records: { 0: { id: 0, name: 'honey' } } })
   t.end()
@@ -45,7 +45,7 @@ test('create', function (t) {
   const actions = createSyncActions('things')
   const reducer = createReducer('things', { update })
 
-  let state = {}
+  let state
   const cid = '1234'
   const startAction = actions.createStart(cid, { name: 'honey' })
   state = reducer(state, startAction)

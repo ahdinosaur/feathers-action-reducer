@@ -130,12 +130,11 @@ function createReducers (serviceName, config) {
 
   const actionHandlers = mapValues(specCreators, (specCreator) => {
     return function (state, action) {
-      if (state.records == null) {
-        state = Object.assign(state, { records: {} })
-      }
       return update(state, specCreator(action))
     }
   })
 
-  return handleActions(actionHandlers)
+  return handleActions(actionHandlers, {
+    records: {}
+  })
 }
