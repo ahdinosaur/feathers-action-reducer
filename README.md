@@ -22,3 +22,8 @@ given the following arguments:
   - `config.key`: an *optional* `String` that describes the default key (e.g. 'id')
 
 returns a [redux reducer](http://redux.js.org/docs/basics/Reducers.html) `Function`
+
+## TODO
+
+- [ ] keep track of action status (busy, pending, ...)
+- [ ] handle errors

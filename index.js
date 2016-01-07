@@ -1,10 +1,5 @@
 'use strict'
 
-// TODO
-// - error handling
-// - status (busy)
-//   - each async action should have cid as first param?
-
 const handleActions = require('redux-actions').handleActions
 const createActionTypes = require('feathers-action-types')
 const mapValues = require('lodash.mapvalues')
