@@ -20,7 +20,7 @@ function createReducers (serviceName, config) {
   const key = config.key || constants.DEFAULT_KEY
   const update = config.update
   if (update == null) {
-    throw new Error('feathers-action-reducers: Expected config.update. Try passing in `react-addons-update` or a compatible interface here (`update-object`, `tcomb/lib/update`)')
+    throw new Error('feathers-action-reducers: Expected config.update. Try passing in `tcomb/lib/update` or a compatible interface here')
   }
 
   const actionTypes = createActionTypes(serviceName)
@@ -63,7 +63,7 @@ function createReducers (serviceName, config) {
     [actionTypes.createSuccess]: function (action) {
       return Object.assign({
         records: {
-          [action.payload.cid]: { $set: undefined },
+          $remove: [action.payload.cid],
           [action.payload.body[key]]: { $set: action.payload.body }
         }
       }, successSpec(action))
@@ -71,7 +71,7 @@ function createReducers (serviceName, config) {
     [actionTypes.createError]: function (action) {
       return Object.assign({
         records: {
-          [action.payload.cid]: { $set: undefined }
+          $remove: [action.payload.cid]
         }
       }, errorSpec(action))
     },
@@ -91,8 +91,9 @@ function createReducers (serviceName, config) {
     },
     [actionTypes.updateError]: function (action) {
       return Object.assign({
+        // TODO reset to before update
         records: {
-          [action.params.id]: { $set: undefined }
+          $remove: [action.params.id]
         }
       }, errorSpec(action))
     },
@@ -112,29 +113,31 @@ function createReducers (serviceName, config) {
     },
     [actionTypes.patchError]: function (action) {
       return Object.assign({
+        // TODO reset to before patch
         records: {
-          [action.params.id]: { $set: undefined }
+          $remove: [action.params.id]
         }
       }, errorSpec(action))
     },
     [actionTypes.removeStart]: function (action) {
       return Object.assign({
         records: {
-          [action.payload.id]: { $set: undefined }
+          $remove: [action.payload.id]
         }
       }, startSpec(action))
     },
     [actionTypes.removeSuccess]: function (action) {
       return Object.assign({
         records: {
-          [action.payload.id]: { $set: undefined }
+          $remove: [action.payload.id]
         }
       }, successSpec(action))
     },
     [actionTypes.removeError]: function (action) {
       return Object.assign({
+        // TODO reset to before remove
         records: {
-          [action.params.id]: { $set: undefined }
+          $remove: [action.payload.id]
         }
       }, errorSpec(action))
     }
@@ -159,14 +162,14 @@ function startSpec (action) {
 
 function successSpec (action) {
   return {
-    pending: { $set: { [action.payload.cid]: undefined } },
+    pending: { $remove: [action.payload.cid] },
     success: { $set: { [action.payload.cid]: action } }
   }
 }
 
 function errorSpec (action) {
   return {
-    pending: { $set: { [action.payload.cid]: undefined } },
+    pending: { $remove: [action.payload.cid] },
     error: { $set: { [action.payload.cid]: action } }
   }
 }

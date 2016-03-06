@@ -48,11 +48,10 @@
     "redux-actions": "^0.8.0"
   },
   "devDependencies": {
-    "deep-filter-object": "^1.0.0",
     "feathers-action-creators": "^1.0.0",
     "object-values": "^1.0.0",
     "standard": "^5.4.1",
     "tape": "^4.4.0",
-    "update-object": "^1.0.0"
+    "tcomb": "^2.7.0"
   }
 }
