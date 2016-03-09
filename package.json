@@ -1,6 +1,6 @@
 {
   "name": "feathers-action-reducer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "redux reducer for feathers service actions",
   "main": "index.js",
   "scripts": {
