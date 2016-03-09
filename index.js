@@ -93,7 +93,7 @@ function createReducers (serviceName, config) {
       return Object.assign({
         // TODO reset to before update
         records: {
-          $remove: [action.params.id]
+          $remove: [action.payload.id]
         }
       }, errorSpec(action))
     },
@@ -115,7 +115,7 @@ function createReducers (serviceName, config) {
       return Object.assign({
         // TODO reset to before patch
         records: {
-          $remove: [action.params.id]
+          $remove: [action.payload.id]
         }
       }, errorSpec(action))
     },
